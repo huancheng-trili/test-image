@@ -22,7 +22,6 @@ jobs:
       dockerfile: Dockerfile
       dry_run: ${{ inputs.dry_run }}
       ref: main
-    secrets: inherit
   build-image2:
     name: Build image
     needs: [build-image]
@@ -36,4 +35,3 @@ jobs:
       dockerfile: Dockerfile
       dry_run: ${{ inputs.dry_run }}
       ref: main
-    secrets: inherit
