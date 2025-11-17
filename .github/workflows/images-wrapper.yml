@@ -1,0 +1,39 @@
+name: Build image wrapper
+
+on:
+  workflow_call:
+    inputs:
+      dry_run:
+        description: Dry-run image build without pushing to the registry
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  build-image:
+    name: Build image
+    uses: huancheng-trili/test-image/.github/workflows/images.yml@main
+    with:
+      docker_registry: docker.io
+      docker_registry_username: ${{ secrets.DOCKER_HUB_USER }}
+      docker_registry_password: ${{ secrets.DOCKER_HUB_TOKEN }} 
+      docker_image_base: testorgaaa
+      image: serve
+      dockerfile: Dockerfile
+      dry_run: ${{ inputs.dry_run }}
+      ref: main
+    secrets: inherit
+  build-image2:
+    name: Build image
+    needs: [build-image]
+    uses: huancheng-trili/test-image/.github/workflows/images.yml@main
+    with:
+      docker_registry: ghcr.io
+      docker_registry_username: ${{ github.actor }}
+      docker_registry_password: ${{ secrets.GITHUB_TOKEN }}
+      docker_image_base: huancheng-trili/test-image
+      image: serve
+      dockerfile: Dockerfile
+      dry_run: ${{ inputs.dry_run }}
+      ref: main
+    secrets: inherit
