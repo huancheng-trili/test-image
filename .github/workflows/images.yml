@@ -42,7 +42,7 @@ jobs:
       packages: write
     steps:
       - name: Build
-        uses: huancheng-trili/test-images/.github/actions/build-docker-image@main
+        uses: huancheng-trili/test-image/.github/actions/build-docker-image@main
         with:
           platform: linux
           arch: arm64
@@ -62,7 +62,7 @@ jobs:
       packages: write
     steps:
       - name: Build
-        uses: huancheng-trili/test-images/.github/actions/build-docker-image@main
+        uses: huancheng-trili/test-image/.github/actions/build-docker-image@main
         with:
           platform: linux
           arch: amd64

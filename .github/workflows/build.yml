@@ -12,7 +12,7 @@ on:
 jobs:
   build-image:
     name: Build image
-    uses: huancheng-trili/test-images/.github/workflows/images.yml@main
+    uses: huancheng-trili/test-image/.github/workflows/images.yml@main
     with:
       docker_registry: docker.io
       docker_image_base: testorgaaa
