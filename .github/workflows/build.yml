@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Dry-run image build without pushing to the registry
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  build-image:
+    name: Build image
+    uses: huancheng-trili/test-images/.github/workflows/images.yml@main
+    with:
+      docker_registry: docker.io
+      docker_image_base: testorgaaa
+      image: serve
+      dockerfile: Dockerfile
+      dry_run: ${{ inputs.dry_run }}
+      ref: main
+    secrets: inherit
