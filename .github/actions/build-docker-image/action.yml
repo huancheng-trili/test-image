@@ -74,6 +74,7 @@ runs:
         cache-to: type=gha,mode=max
         labels: ${{ steps.meta.outputs.labels }}
         platforms: ${{ inputs.platform }}
+        tags: ${{ inputs.image_names }}
         outputs: type=image,push-by-digest=true,name-canonical=true,"push=${{ steps.set-values.outputs.push }}"
     - name: Export digest
       shell: bash
