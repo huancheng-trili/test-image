@@ -143,11 +143,12 @@ jobs:
       - name: Create manifest list and push
         if: ${{ !inputs.dry_run }}
         working-directory: ${{ runner.temp }}/digests/${{ inputs.image_id }}
+        shell: bash
         run: |
           source=""
-          echo '${{ inputs.image_names }}' | while read -r name; do
+          while read -r name; do
             if [ -n "$name" ]; then source+=$(printf "$name@%s " *); fi
-          done
+          done < <(echo '${{ inputs.image_names }}')
 
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
 
