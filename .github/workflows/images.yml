@@ -145,7 +145,7 @@ jobs:
         working-directory: ${{ runner.temp }}/digests/${{ inputs.image_id }}
         run: |
           source=""
-          echo "${{ inputs.image_names }}" | while read -r name; do
+          echo '${{ inputs.image_names }}' | while read -r name; do
             if [ -n "$name" ]; then source+=$(printf "$name@%s " *); fi
           done
 
