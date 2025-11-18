@@ -20,7 +20,7 @@ jobs:
     with:
       image_id: serve
       image_names: |
-        docker.io/testorgaaa
+        docker.io/testorgaaa/serve
         ghcr.io/huancheng-trili/test-image/serve
       dockerfile: Dockerfile
       dry_run: ${{ inputs.dry_run }}
