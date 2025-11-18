@@ -129,7 +129,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ inputs.images }}
+          images: ${{ inputs.image_names }}
           tags: |
             type=ref,event=tag
             type=raw,value=${{ inputs.ref }}
@@ -150,6 +150,9 @@ jobs:
           done
 
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
+
+          echo "$source"
+          echo "$tags"
 
           docker buildx imagetools create "$tags" "$source"
       - name: Inspect image
