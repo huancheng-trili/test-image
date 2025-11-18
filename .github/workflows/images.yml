@@ -155,8 +155,6 @@ jobs:
           echo "$source"
           echo "$tags"
 
-          $(printf '${{ inputs.docker_registry }}/${{ inputs.docker_image_base }}/${{ inputs.image }}@sha256:%s ' *)
-
           docker buildx imagetools create "$tags" "$source"
       - name: Inspect image
         if: ${{ !inputs.dry_run }}
