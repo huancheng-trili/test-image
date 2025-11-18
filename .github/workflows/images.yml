@@ -147,9 +147,7 @@ jobs:
         run: |
           source=""
           while read -r name; do
-            if [ -n "$name" ]; then
-              docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}') $(printf "$name@sha256:%s " *)
-            fi
+            if [ -n "$name" ]; then source+=$(printf "$name@sha256:%s " *); fi
           done < <(echo '${{ inputs.image_names }}')
 
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
@@ -157,6 +155,7 @@ jobs:
           echo "$source"
           echo "$tags"
 
+          docker buildx imagetools create $tags $source
       - name: Inspect image
         if: ${{ !inputs.dry_run }}
         id: inspect-image
