@@ -147,7 +147,7 @@ jobs:
         run: |
           source=""
           while read -r name; do
-            if [ -n "$name" ]; then source=$(printf "$name@sha256:%s " *); fi
+            if [ -n "$name" ]; then source+=$(printf "$name@sha256:%s " *); fi
           done < <(echo '${{ inputs.image_names }}')
 
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
