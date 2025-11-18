@@ -160,4 +160,8 @@ jobs:
         if: ${{ !inputs.dry_run }}
         id: inspect-image
         run: |
-          docker buildx imagetools inspect "${{ fromJson(steps.meta.outputs.json).tags[0] }}"
+          for tag in ${{ join(fromJSON(steps.meta.outputs.json).tags, ' ') }}
+          do
+            echo "Checking image '$tag'"
+            docker buildx imagetools inspect "$tag"
+          done
