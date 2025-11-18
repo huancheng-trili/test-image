@@ -145,17 +145,13 @@ jobs:
         working-directory: ${{ runner.temp }}/digests/${{ inputs.image_id }}
         shell: bash
         run: |
-          source=""
-          while read -r name; do
-            if [ -n "$name" ]; then source+=$(printf "$name@%s " *); fi
-          done < <(echo '${{ inputs.image_names }}')
-
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
-
-          echo "$source"
-          echo "$tags"
-
-          docker buildx imagetools create "$tags" "$source"
+          while read -r name; do
+            if [ -n "$name" ]; then
+              source=$(printf "$name@%s " *)
+              docker buildx imagetools create "$tags" "$source"
+            fi
+          done < <(echo '${{ inputs.image_names }}')
       - name: Inspect image
         if: ${{ !inputs.dry_run }}
         id: inspect-image
