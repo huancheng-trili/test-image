@@ -19,9 +19,7 @@ jobs:
     uses: huancheng-trili/test-image/.github/workflows/images.yml@main
     with:
       image_id: serve
-      image_names: |
-        docker.io/testorgaaa/serve
-        ghcr.io/huancheng-trili/test-image/serve
+      image_names: ghcr.io/huancheng-trili/test-image/serve
       dockerfile: Dockerfile
       dry_run: ${{ inputs.dry_run }}
       ref: ${{ github.sha }}

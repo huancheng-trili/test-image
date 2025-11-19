@@ -152,16 +152,14 @@ jobs:
 
           tags=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< '${{ steps.meta.outputs.json }}')
 
-          echo "$source"
-          echo "$tags"
-
           docker buildx imagetools create $tags $source
       - name: Inspect image
         if: ${{ !inputs.dry_run }}
         id: inspect-image
+        shell: bash
         run: |
-          for tag in ${{ join(fromJSON(steps.meta.outputs.json).tags, ' ') }}
-          do
+          for tag in ${{ join(fromJSON(steps.meta.outputs.json).tags, ' ') }}; do
             echo "Checking image '$tag'"
             docker buildx imagetools inspect "$tag"
+            echo ""
           done
